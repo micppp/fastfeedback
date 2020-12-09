@@ -10,6 +10,15 @@ export default function Home() {
     <>
       <Head>
         <title>Fast Feedback</title>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if (document.cookie && document.cookie.includes('fast-feedback-auth')) {
+                window.location.href = "/dashboard"
+              }
+            `,
+          }}
+        />
       </Head>
       <Flex
         as='main'
@@ -21,9 +30,27 @@ export default function Home() {
         <Logo color='blue.300' boxSize={32} marginBottom={4} />
 
         {auth.user ? (
-          <Button variant='outline' size='md' onClick={(e) => auth.signOut()}>
-            Sign Out
-          </Button>
+          <Flex>
+            <Button
+              as='a'
+              href='/dashboard'
+              backgroundColor='gray.900'
+              color='white'
+              fontWeight='medium'
+              marginRight={2}
+              maxW='200px'
+              _hover={{ bg: 'gray.700' }}
+              _active={{
+                bg: 'gray.800',
+                transform: 'scale(0.95)',
+              }}
+            >
+              View Dashboard
+            </Button>
+            <Button variant='outline' size='md' onClick={(e) => auth.signOut()}>
+              Sign Out
+            </Button>
+          </Flex>
         ) : (
           <Button
             variant='outline'
