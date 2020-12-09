@@ -7,8 +7,8 @@ import DashboardPage from '@/components/DashboardPage';
 import fetcher from '@/utils/fetcher';
 
 const Dashboard = () => {
-  const auth = useAuth();
-  const { data } = useSWR('/api/sites', fetcher);
+  const { user } = useAuth();
+  const { data } = useSWR(user ? ['/api/sites', user.token] : null, fetcher);
 
   if (!data) {
     return (
