@@ -6,7 +6,7 @@ import SiteTable from '@/components/SiteTable';
 import DashboardPage from '@/components/DashboardPage';
 import fetcher from '@/utils/fetcher';
 
-export default function Home() {
+const Dashboard = () => {
   const auth = useAuth();
   const { data } = useSWR('/api/sites', fetcher);
 
@@ -23,4 +23,6 @@ export default function Home() {
       {data.sites ? <SiteTable sites={data.sites} /> : <PaidPlanEmpty />}
     </DashboardPage>
   );
-}
+};
+
+export default Dashboard;
