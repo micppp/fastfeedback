@@ -8,6 +8,11 @@ function App({ Component, pageProps }) {
       <AuthProvider>
         <Component {...pageProps} />
       </AuthProvider>
+      <style global jsx>{`
+        body {
+          background-color: #edf2f7;
+        }
+      `}</style>
     </ChakraProvider>
   );
 }
