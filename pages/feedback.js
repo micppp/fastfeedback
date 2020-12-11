@@ -1,20 +1,21 @@
 import useSWR from 'swr';
-import { useAuth } from '@/lib/auth';
+
 import PaidPlanEmpty from '@/components/PaidPlanEmpty';
 import SiteTableSkeleton from '@/components/SiteTableSkeleton';
-import SiteTable from '@/components/SiteTable';
 import DashboardPage from '@/components/DashboardPage';
+import FeedbackTable from '@/components/FeedbackTable';
+import { useAuth } from '@/lib/auth';
 import fetcher from '@/utils/fetcher';
 import SiteTableHeader from '@/components/SiteTableHeader';
 
-const Dashboard = () => {
+const MyFeedback = () => {
   const { user } = useAuth();
-  const { data } = useSWR(user ? ['/api/sites', user.token] : null, fetcher);
+  const { data } = useSWR(user ? ['/api/feedback', user.token] : null, fetcher);
 
   if (!data) {
     return (
       <DashboardPage>
-        <SiteTableHeader breadcrumb='sites' title='My Sites' />
+        <SiteTableHeader breadcrumb='feedback' title='My Feedback' />
         <SiteTableSkeleton />
       </DashboardPage>
     );
@@ -22,10 +23,14 @@ const Dashboard = () => {
 
   return (
     <DashboardPage>
-      <SiteTableHeader breadcrumb='sites' title='My Sites' />
-      {data.sites.length ? <SiteTable sites={data.sites} /> : <PaidPlanEmpty />}
+      <SiteTableHeader breadcrumb='feedback' title='My Feedback' />
+      {data.feedback.length ? (
+        <FeedbackTable allFeedback={data.feedback} />
+      ) : (
+        <PaidPlanEmpty />
+      )}
     </DashboardPage>
   );
 };
 
-export default Dashboard;
+export default MyFeedback;
